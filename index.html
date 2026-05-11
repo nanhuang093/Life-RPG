@@ -1189,7 +1189,7 @@ const TYPE_GROUPS = [
   { label: '📆 每周任务', types: ['weekly'],             desc: '每周重置',   minLevel: 3  },
   { label: '⭐ 奖励大任务', types: ['bonus','big','small'], desc: '每周重置', minLevel: 5  },
   { label: '🎰 扭蛋',    types: ['gacha'],              desc: '抽藏品',     minLevel: 1  },
-  { label: '📔 图鉴',    types: ['collection'],         desc: '收藏展示',   minLevel: 3  },
+  { label: '📔 图鉴',    types: ['collection'],         desc: '收藏展示',   minLevel: 1  },
   { label: '🏆 成就',    types: ['achievements'],       desc: '解锁记录',   minLevel: 1  },
 ];
 
@@ -2555,7 +2555,7 @@ function completeTask(id) {
 
     // Check newly unlocked features
     const unlockMessages = {
-      3:  '🎉 Lv.3 解锁: 每周任务 + 图鉴!',
+      3:  '🎉 Lv.3 解锁: 每周任务!',
       5:  '🎉 Lv.5 解锁: 奖励大任务 + 高级扭蛋!',
       8:  '🎉 Lv.8 解锁: 随机任务抽取!',
       10: '🎉 Lv.10 解锁: 限定系列!',
