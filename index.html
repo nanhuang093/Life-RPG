@@ -1807,6 +1807,41 @@ function save() {
   localStorage.setItem('lifeRPG', JSON.stringify(state));
 }
 
+function exportSave() {
+  const data = localStorage.getItem('lifeRPG') || '{}';
+  const encoded = btoa(unescape(encodeURIComponent(data)));
+  const out = document.createElement('textarea');
+  out.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:85vw;height:160px;z-index:9999;background:#1a1828;color:#e8e3f0;border:1px solid #7eb8c9;border-radius:12px;padding:12px;font-size:11px;font-family:monospace';
+  out.value = encoded;
+  out.readOnly = true;
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9998';
+  const tip = document.createElement('div');
+  tip.style.cssText = 'position:fixed;top:calc(50% + 95px);left:50%;transform:translateX(-50%);z-index:9999;color:#7eb8c9;font-size:13px;white-space:nowrap';
+  tip.textContent = '全选复制，点击背景关闭';
+  overlay.onclick = () => { overlay.remove(); out.remove(); tip.remove(); };
+  document.body.appendChild(overlay);
+  document.body.appendChild(out);
+  document.body.appendChild(tip);
+  out.focus();
+  out.select();
+}
+
+function importSave() {
+  const text = document.getElementById('importText').value.trim();
+  if (!text) return showToast('请先粘贴存档代码');
+  try {
+    const decoded = decodeURIComponent(escape(atob(text)));
+    const parsed = JSON.parse(decoded);
+    if (!parsed.xp === undefined) throw new Error('格式错误');
+    localStorage.setItem('lifeRPG', decoded);
+    showToast('存档导入成功，刷新中…');
+    setTimeout(() => location.reload(), 1200);
+  } catch(e) {
+    showToast('存档代码无效，请重新复制');
+  }
+}
+
 function showEncouragement() {
   const enc = ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)];
   document.getElementById('encouragement').textContent = enc;
@@ -2416,6 +2451,23 @@ function render() {
       </div>
     `;
     container.appendChild(achievementsDiv);
+
+    // 存档备份区块
+    const backupDiv = document.createElement('div');
+    backupDiv.style.cssText = 'padding:0 16px 32px';
+    backupDiv.innerHTML = `
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-top:8px">
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px">💾 存档备份</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:16px">换设备或换浏览器时用这个转移数据</div>
+        <button onclick="exportSave()" style="width:100%;padding:12px;background:var(--accent2);color:#0f0e17;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px">导出存档</button>
+        <button onclick="document.getElementById('importArea').style.display=document.getElementById('importArea').style.display==='none'?'block':'none'" style="width:100%;padding:12px;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:10px;font-size:14px;cursor:pointer;margin-bottom:10px">导入存档</button>
+        <div id="importArea" style="display:none">
+          <textarea id="importText" placeholder="把导出的存档代码粘贴到这里..." style="width:100%;height:100px;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:12px;font-family:monospace;resize:vertical;box-sizing:border-box"></textarea>
+          <button onclick="importSave()" style="width:100%;padding:12px;background:var(--accent);color:#0f0e17;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px">确认导入</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(backupDiv);
     return;
   }
 
