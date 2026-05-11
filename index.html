@@ -1995,6 +1995,22 @@ function pickItemFromCollection(collection, rarity) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
+function generateLockedCardSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 420" style="width:100%;max-width:260px">
+  <defs>
+    <linearGradient id="lbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1828"/><stop offset="100%" style="stop-color:#0f0e17"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="278" height="418" rx="16" fill="none" stroke="#2e2a45" stroke-width="2"/>
+  <rect x="4" y="4" width="272" height="412" rx="14" fill="url(#lbg)"/>
+  <text x="140" y="125" font-size="72" text-anchor="middle" opacity="0.18">?</text>
+  <rect x="60" y="148" width="160" height="2" rx="1" fill="#2e2a45"/>
+  <text x="140" y="185" font-size="18" fill="#2e2a45" text-anchor="middle" font-family="serif" letter-spacing="4">未解锁</text>
+  <rect x="60" y="200" width="160" height="1" rx="0.5" fill="#2e2a45"/>
+</svg>`;
+}
+
 function generateCardSVG(item, collectionName) {
   const color = item.color || '#7eb8c9';
   const isEpic = item.rarity === 'epic';
@@ -2301,7 +2317,7 @@ function render() {
                   onmouseout="this.style.transform='scale(1)'"
                 >${generateCardSVG(item, col.name)}</div>`;
               } else {
-                return `<div style="opacity:0.25;filter:grayscale(100%)">${generateCardSVG(item, col.name)}</div>`;
+                return `<div>${generateLockedCardSVG()}</div>`;
               }
             }).join('')}
           </div>
