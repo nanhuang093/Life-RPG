@@ -1363,16 +1363,16 @@ const GACHA_COLLECTIONS = {
   fossil: {
     name: '🦐 古生物博物馆',
     items: [
-      { id: 'fossil_1', name: '三叶虫', rarity: 'common', emoji: '🪲' },
-      { id: 'fossil_2', name: '海百合', rarity: 'common', emoji: '🌼' },
-      { id: 'fossil_3', name: '腕足动物', rarity: 'common', emoji: '🐚' },
-      { id: 'fossil_4', name: '菊石', rarity: 'common', emoji: '🐌' },
-      { id: 'fossil_5', name: '奇虾', rarity: 'rare', emoji: '🦐' },
-      { id: 'fossil_6', name: '房角石', rarity: 'rare', emoji: '🦑' },
-      { id: 'fossil_7', name: '海蝎', rarity: 'rare', emoji: '🦂' },
-      { id: 'fossil_8', name: '邓氏鱼', rarity: 'epic', emoji: '🐟' },
-      { id: 'fossil_9', name: '巨脉蜻蜓', rarity: 'epic', emoji: '🦟' },
-      { id: 'fossil_10', name: '寒武纪大爆发', rarity: 'epic', emoji: '💥' },
+      { id: 'fossil_1', name: '三叶虫', rarity: 'common', emoji: '🪲', color: '#a8b8a0', role: '节肢动物门 · 三叶虫纲', quote: '五亿年的见证者。', stats: ['寒武纪–二叠纪', 'Trilobita'] },
+      { id: 'fossil_2', name: '海百合', rarity: 'common', emoji: '🌼', color: '#c0b090', role: '棘皮动物门 · 海百合纲', quote: '固着一生，随波而动。', stats: ['奥陶纪–现代', 'Crinoidea'] },
+      { id: 'fossil_3', name: '腕足动物', rarity: 'common', emoji: '🐚', color: '#d4b8a0', role: '腕足动物门', quote: '两扇壳，一个家。', stats: ['寒武纪–现代', 'Brachiopoda'] },
+      { id: 'fossil_4', name: '菊石', rarity: 'common', emoji: '🐌', color: '#b0a080', role: '软体动物门 · 菊石亚纲', quote: '螺旋是时间的形状。', stats: ['泥盆纪–白垩纪末', 'Ammonoidea'] },
+      { id: 'fossil_5', name: '奇虾', rarity: 'rare', emoji: '🦐', color: '#e8a060', role: '放射齿目 · 奇虾科', quote: '寒武纪的霸主。', stats: ['寒武纪 · 5.2亿年前', 'Anomalocaris canadensis'] },
+      { id: 'fossil_6', name: '房角石', rarity: 'rare', emoji: '🦑', color: '#90b8d0', role: '软体动物门 · 直角石目', quote: '直冲九米，奥陶海王。', stats: ['奥陶纪 · 4.5亿年前', 'Cameroceras trentonense'] },
+      { id: 'fossil_7', name: '海蝎', rarity: 'rare', emoji: '🦂', color: '#c09858', role: '节肢动物门 · 广翅鲎目', quote: '两米半的海底恐惧。', stats: ['奥陶纪–二叠纪', 'Eurypterida'] },
+      { id: 'fossil_8', name: '邓氏鱼', rarity: 'epic', emoji: '🐟', color: '#d07840', role: '盾皮鱼纲 · 节颈鱼目', quote: '咬合力超越任何现生鱼类。', stats: ['泥盆纪 · 3.6亿年前', 'Dunkleosteus terrelli'] },
+      { id: 'fossil_9', name: '巨脉蜻蜓', rarity: 'epic', emoji: '🦟', color: '#88b870', role: '昆虫纲 · 原蜻蜓目', quote: '翼展七十厘米的空中霸主。', stats: ['石炭纪 · 3亿年前', 'Meganeura monyi'] },
+      { id: 'fossil_10', name: '寒武纪大爆发', rarity: 'epic', emoji: '💥', color: '#f0c060', role: '古生代 · 寒武纪', quote: '五亿年前，生命突然复杂了。', stats: ['寒武纪 · 5.4亿年前', 'Cambrian Explosion'] },
     ]
   },
   library: {
@@ -1713,6 +1713,272 @@ const GACHA_COLLECTIONS = {
 </g>`
       }
     ]
+  },
+  ordovician: {
+    name: '🦑 奥陶纪/志留纪',
+    items: [
+      {
+        id: 'ordovician_1', name: '笔石', rarity: 'common', color: '#a8c4a8',
+        role: '半索动物 · 笔石纲',
+        quote: '随洋流漂荡,四亿年。',
+        stats: ['奥陶纪–志留纪', 'Monograptus sp.'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <path d="M-88,38 Q0,5 88,-38" stroke-width="2.2"/>
+  <path d="M-70,31 Q-76,18 -68,16" stroke-width="1.2"/>
+  <path d="M-53,24 Q-59,11 -51,9" stroke-width="1.2"/>
+  <path d="M-35,17 Q-41,4 -33,2" stroke-width="1.2"/>
+  <path d="M-18,10 Q-24,-3 -16,-5" stroke-width="1.2"/>
+  <path d="M0,3 Q-6,-10 2,-12" stroke-width="1.2"/>
+  <path d="M18,-5 Q12,-18 20,-20" stroke-width="1.2"/>
+  <path d="M35,-13 Q29,-26 37,-28" stroke-width="1.2"/>
+  <path d="M53,-21 Q47,-34 55,-36" stroke-width="1.2"/>
+  <path d="M70,-30 Q64,-43 72,-45" stroke-width="1.2"/>
+  <path d="M-88,38 L-96,46" stroke-width="0.8" opacity="0.5"/>
+</g>`
+      },
+      {
+        id: 'ordovician_2', name: '直角石', rarity: 'common', color: '#b0a8c0',
+        role: '头足类 · 直角石亚纲',
+        quote: '奥陶纪的海中箭矢。',
+        stats: ['奥陶纪–二叠纪', 'Orthoceras sp.'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <path d="M-85,-35 L82,0 L-85,35 Q-92,0 -85,-35Z" fill="currentColor" fill-opacity="0.1" stroke-width="1.7"/>
+  <path d="M-68,-28 Q-66,0 -68,28" stroke-width="1.2" opacity="0.7"/>
+  <path d="M-50,-24 Q-48,0 -50,24" stroke-width="1.2" opacity="0.7"/>
+  <path d="M-32,-20 Q-30,0 -32,20" stroke-width="1.2" opacity="0.7"/>
+  <path d="M-14,-16 Q-12,0 -14,16" stroke-width="1.2" opacity="0.7"/>
+  <path d="M4,-12 Q6,0 4,12" stroke-width="1.2" opacity="0.7"/>
+  <path d="M22,-8 Q24,0 22,8" stroke-width="1.1" opacity="0.65"/>
+  <path d="M40,-4 Q42,0 40,4" stroke-width="1" opacity="0.6"/>
+  <path d="M-92,0 L82,0" stroke-width="0.75" stroke-dasharray="5,3" opacity="0.45"/>
+</g>`
+      },
+      {
+        id: 'ordovician_3', name: '海百合', rarity: 'common', color: '#c8d490',
+        role: '棘皮动物 · 海百合纲',
+        quote: '扎根海底,向上生长。',
+        stats: ['奥陶纪至今', 'Crinoidea'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <path d="M0,78 L0,25" stroke-width="2.5" stroke-dasharray="5,2.5"/>
+  <path d="M0,78 Q-15,86 -18,80 M0,78 Q15,86 18,80 M0,78 Q-7,90 -4,95 M0,78 Q7,90 4,95" stroke-width="1.2"/>
+  <path d="M-14,25 Q0,16 14,25 L10,12 Q0,9 -10,12Z" fill="currentColor" fill-opacity="0.22" stroke-width="1.4"/>
+  <path d="M-10,12 C-30,-2 -44,-16 -54,-42" stroke-width="1.6"/>
+  <path d="M-5,10 C-18,-6 -22,-24 -22,-54" stroke-width="1.6"/>
+  <path d="M0,9 C0,-8 0,-28 0,-58" stroke-width="1.6"/>
+  <path d="M5,10 C18,-6 22,-24 22,-54" stroke-width="1.6"/>
+  <path d="M10,12 C30,-2 44,-16 54,-42" stroke-width="1.6"/>
+  <path d="M-30,-2 L-36,2 M-36,-6 L-42,-2 M-42,-11 L-48,-7 M-47,-17 L-53,-13" stroke-width="0.8" opacity="0.6"/>
+  <path d="M-30,-2 L-25,4 M-36,-6 L-31,0 M-42,-11 L-37,-5 M-47,-17 L-42,-11" stroke-width="0.8" opacity="0.6"/>
+  <path d="M30,-2 L36,2 M36,-6 L42,-2 M42,-11 L48,-7 M47,-17 L53,-13" stroke-width="0.8" opacity="0.6"/>
+  <path d="M30,-2 L25,4 M36,-6 L31,0 M42,-11 L37,-5 M47,-17 L42,-11" stroke-width="0.8" opacity="0.6"/>
+  <path d="M0,-12 L-7,-14 M0,-22 L-7,-24 M0,-32 L-7,-34 M0,-42 L-7,-44 M0,-12 L7,-14 M0,-22 L7,-24 M0,-32 L7,-34 M0,-42 L7,-44" stroke-width="0.8" opacity="0.6"/>
+</g>`
+      },
+      {
+        id: 'ordovician_4', name: '腕足动物', rarity: 'common', color: '#d4b8a0',
+        role: '腕足动物门',
+        quote: '二枚壳,守住一整片海。',
+        stats: ['寒武纪至今', 'Brachiopoda'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <path d="M-54,8 Q0,60 54,8" fill="currentColor" fill-opacity="0.13" stroke-width="1.7"/>
+  <path d="M-54,8 Q0,-44 54,8" fill="currentColor" fill-opacity="0.1" stroke-width="1.7"/>
+  <line x1="-54" y1="8" x2="54" y2="8" stroke-width="0.8" opacity="0.4"/>
+  <path d="M-6,-44 Q0,-55 6,-44" stroke-width="1.3"/>
+  <circle cx="0" cy="-54" r="2.5" fill="currentColor" fill-opacity="0.35" stroke-width="0"/>
+  <path d="M0,-44 Q0,-18 0,8" stroke-width="0.85" opacity="0.6"/>
+  <path d="M0,-44 Q-12,-16 -18,8" stroke-width="0.85" opacity="0.6"/>
+  <path d="M0,-44 Q-26,-10 -36,8" stroke-width="0.85" opacity="0.6"/>
+  <path d="M0,-44 Q-38,-4 -52,8" stroke-width="0.85" opacity="0.6"/>
+  <path d="M0,-44 Q12,-16 18,8" stroke-width="0.85" opacity="0.6"/>
+  <path d="M0,-44 Q26,-10 36,8" stroke-width="0.85" opacity="0.6"/>
+  <path d="M0,-44 Q38,-4 52,8" stroke-width="0.85" opacity="0.6"/>
+  <path d="M0,8 Q0,34 0,58" stroke-width="0.8" opacity="0.55"/>
+  <path d="M0,8 Q-12,32 -16,58" stroke-width="0.8" opacity="0.55"/>
+  <path d="M0,8 Q-26,28 -38,56" stroke-width="0.8" opacity="0.55"/>
+  <path d="M0,8 Q-40,22 -52,48" stroke-width="0.8" opacity="0.55"/>
+  <path d="M0,8 Q12,32 16,58" stroke-width="0.8" opacity="0.55"/>
+  <path d="M0,8 Q26,28 38,56" stroke-width="0.8" opacity="0.55"/>
+  <path d="M0,8 Q40,22 52,48" stroke-width="0.8" opacity="0.55"/>
+</g>`
+      },
+      {
+        id: 'ordovician_5', name: '星甲鱼', rarity: 'rare', color: '#b0b898',
+        role: '早期无颌鱼类',
+        quote: '鱼类的黎明。',
+        stats: ['奥陶纪 · 4.5亿年前', 'Astraspis desiderata'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <path d="M-75,0 Q-68,-32 -25,-36 Q10,-38 32,-22 Q42,-12 42,0 Q42,12 32,22 Q10,38 -25,36 Q-68,32 -75,0Z" fill="currentColor" fill-opacity="0.12" stroke-width="1.7"/>
+  <path d="M-60,-4 Q-40,-30 -6,-35" stroke-width="0.9" opacity="0.5"/>
+  <path d="M-60,4 Q-40,30 -6,35" stroke-width="0.9" opacity="0.5"/>
+  <path d="M-12,-36 Q8,-28 22,-14" stroke-width="0.9" opacity="0.5"/>
+  <path d="M-12,36 Q8,28 22,14" stroke-width="0.9" opacity="0.5"/>
+  <circle cx="-35" cy="-10" r="1.8" fill="currentColor" fill-opacity="0.45" stroke-width="0"/>
+  <circle cx="-24" cy="-20" r="1.8" fill="currentColor" fill-opacity="0.45" stroke-width="0"/>
+  <circle cx="-12" cy="-26" r="1.8" fill="currentColor" fill-opacity="0.45" stroke-width="0"/>
+  <circle cx="-35" cy="10" r="1.8" fill="currentColor" fill-opacity="0.45" stroke-width="0"/>
+  <circle cx="-24" cy="20" r="1.8" fill="currentColor" fill-opacity="0.45" stroke-width="0"/>
+  <circle cx="-12" cy="26" r="1.8" fill="currentColor" fill-opacity="0.45" stroke-width="0"/>
+  <circle cx="-2" cy="0" r="1.8" fill="currentColor" fill-opacity="0.45" stroke-width="0"/>
+  <ellipse cx="-56" cy="-12" rx="7" ry="9" fill="currentColor" fill-opacity="0.28" stroke-width="1.2"/>
+  <path d="M-75,4 Q-80,0 -75,-4" stroke-width="1.2"/>
+  <path d="M42,0 Q56,0 70,0" stroke-width="1.5"/>
+  <path d="M42,-8 Q56,-5 70,0 M42,8 Q56,5 70,0" stroke-width="1" opacity="0.65"/>
+  <path d="M48,-4 L48,4 M54,-3 L54,3 M60,-2 L60,2 M66,-1 L66,1" stroke-width="0.75" opacity="0.5"/>
+  <path d="M70,0 Q82,-22 88,-14" stroke-width="1.5"/>
+  <path d="M70,0 Q80,16 84,10" stroke-width="1.3"/>
+</g>`
+      },
+      {
+        id: 'ordovician_6', name: '鹦鹉螺', rarity: 'rare', color: '#90b8c8',
+        role: '头足类 · 鹦鹉螺目',
+        quote: '完美螺旋,亘古不变。',
+        stats: ['奥陶纪至今', 'Nautiloidea'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <circle cx="0" cy="0" r="62" fill="currentColor" fill-opacity="0.09" stroke-width="1.8"/>
+  <circle cx="0" cy="0" r="20" fill="none" stroke-width="1" opacity="0.4"/>
+  <circle cx="0" cy="0" r="40" fill="none" stroke-width="0.8" opacity="0.32"/>
+  <path d="M0,-62 Q8,-52 8,-40" stroke-width="1" opacity="0.55"/>
+  <path d="M44,-44 Q54,-28 62,0" stroke-width="1" opacity="0.55"/>
+  <path d="M44,44 Q54,28 62,0" stroke-width="1" opacity="0.55"/>
+  <path d="M0,62 Q8,52 8,40" stroke-width="1" opacity="0.55"/>
+  <path d="M0,62 Q-8,52 -8,40" stroke-width="1" opacity="0.55"/>
+  <path d="M-44,44 Q-54,28 -62,0" stroke-width="1" opacity="0.55"/>
+  <path d="M-44,-44 Q-54,-28 -62,0" stroke-width="1" opacity="0.55"/>
+  <path d="M0,-62 Q-8,-52 -8,-40" stroke-width="1" opacity="0.55"/>
+  <path d="M38,-50 Q58,-36 62,0" stroke-width="2.2"/>
+  <path d="M48,-44 L58,-56" stroke-width="1.1"/>
+  <path d="M54,-38 L66,-44" stroke-width="1.1"/>
+  <path d="M59,-30 L72,-32" stroke-width="1.1"/>
+  <path d="M61,-20 L74,-16" stroke-width="1.1"/>
+  <path d="M62,-8 L75,-2" stroke-width="1.1"/>
+</g>`
+      },
+      {
+        id: 'ordovician_7', name: '板足鲎', rarity: 'rare', color: '#c0a870',
+        role: '节肢动物 · 广翅目',
+        quote: '志留纪的海中幽灵。',
+        stats: ['志留纪–二叠纪', 'Eurypterus remipes'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <path d="M-26,-76 Q0,-86 26,-76 Q40,-64 40,-50 Q38,-36 26,-32 Q0,-26 -26,-32 Q-38,-40 -40,-54 Q-38,-68 -26,-76Z" fill="currentColor" fill-opacity="0.14" stroke-width="1.6"/>
+  <ellipse cx="-14" cy="-58" rx="6" ry="8" fill="currentColor" fill-opacity="0.28" stroke-width="1.1"/>
+  <ellipse cx="14" cy="-58" rx="6" ry="8" fill="currentColor" fill-opacity="0.28" stroke-width="1.1"/>
+  <path d="M-30,-52 Q-52,-50 -64,-46" stroke-width="1.2"/>
+  <path d="M-32,-46 Q-56,-46 -70,-46" stroke-width="1.2"/>
+  <path d="M-34,-40 Q-58,-44 -72,-48" stroke-width="1.2"/>
+  <path d="M30,-52 Q52,-50 64,-46" stroke-width="1.2"/>
+  <path d="M32,-46 Q56,-46 70,-46" stroke-width="1.2"/>
+  <path d="M34,-40 Q58,-44 72,-48" stroke-width="1.2"/>
+  <path d="M-36,-30 Q-52,-18 -78,-14 Q-84,-8 -82,0 Q-80,6 -72,4 Q-58,2 -44,-8" stroke-width="1.5"/>
+  <path d="M36,-30 Q52,-18 78,-14 Q84,-8 82,0 Q80,6 72,4 Q58,2 44,-8" stroke-width="1.5"/>
+  <path d="M-28,-24 L28,-24 L28,32 Q0,36 -28,32Z" fill="currentColor" fill-opacity="0.1" stroke-width="1.4"/>
+  <path d="M-28,-12 L28,-12" stroke-width="0.75" opacity="0.5"/>
+  <path d="M-28,0 L28,0" stroke-width="0.75" opacity="0.5"/>
+  <path d="M-27,12 L27,12" stroke-width="0.75" opacity="0.5"/>
+  <path d="M-26,24 L26,24" stroke-width="0.75" opacity="0.5"/>
+  <path d="M-20,32 L-8,72 L8,72 L20,32" fill="currentColor" fill-opacity="0.1" stroke-width="1.2"/>
+  <path d="M-18,42 L18,42" stroke-width="0.7" opacity="0.45"/>
+  <path d="M-14,52 L14,52" stroke-width="0.7" opacity="0.45"/>
+  <path d="M-10,62 L10,62" stroke-width="0.7" opacity="0.45"/>
+  <path d="M-4,72 Q0,88 4,72" stroke-width="1.2"/>
+  <path d="M0,72 L0,88" stroke-width="1.8"/>
+</g>`
+      },
+      {
+        id: 'ordovician_8', name: '始棘鱼', rarity: 'rare', color: '#b0a8c0',
+        role: '棘鱼纲 · 最早的有颌鱼',
+        quote: '颌骨出现,世界改变了。',
+        stats: ['志留纪–二叠纪', 'Climatius reticulatus'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <path d="M-80,0 Q-62,-28 -5,-22 Q32,-18 60,0 Q46,22 5,24 Q-56,26 -80,0Z" fill="currentColor" fill-opacity="0.11" stroke-width="1.6"/>
+  <path d="M-80,0 Q-88,-6 -84,-14 Q-80,-20 -72,-16" stroke-width="1.3"/>
+  <circle cx="-64" cy="-10" r="7" fill="currentColor" fill-opacity="0.22" stroke-width="1.2"/>
+  <circle cx="-64" cy="-10" r="3.5" fill="currentColor" fill-opacity="0.4" stroke-width="0"/>
+  <path d="M-50,-20 Q-44,-6 -50,18" stroke-width="0.9" opacity="0.5"/>
+  <path d="M8,-22 L2,-44" stroke-width="1.6"/>
+  <path d="M2,-44 Q20,-36 28,-22" stroke-width="1.2"/>
+  <path d="M8,22 L2,44" stroke-width="1.6"/>
+  <path d="M2,44 Q20,36 28,22" stroke-width="1.2"/>
+  <path d="M-48,-18 L-54,-36" stroke-width="1.5"/>
+  <path d="M-54,-36 Q-38,-26 -32,-12" stroke-width="1.1"/>
+  <path d="M-48,18 L-54,36" stroke-width="1.5"/>
+  <path d="M-54,36 Q-38,26 -32,12" stroke-width="1.1"/>
+  <path d="M-35,-20 L-40,-36" stroke-width="1.3"/>
+  <path d="M-22,-21 L-26,-38" stroke-width="1.3"/>
+  <path d="M-8,-22 L-10,-40" stroke-width="1.3"/>
+  <path d="M-35,20 L-40,36" stroke-width="1.3"/>
+  <path d="M-22,21 L-26,38" stroke-width="1.3"/>
+  <path d="M-8,22 L-10,40" stroke-width="1.3"/>
+  <path d="M60,0 Q76,-26 82,-16" stroke-width="1.5"/>
+  <path d="M60,0 Q74,18 78,12" stroke-width="1.3"/>
+  <path d="M-18,-18 L-10,-18 M2,-20 L10,-20 M20,-18 L28,-14 M36,-10 L44,-6" stroke-width="0.7" opacity="0.45"/>
+  <path d="M-18,18 L-10,18 M2,20 L10,20 M20,18 L28,14 M36,10 L44,6" stroke-width="0.7" opacity="0.45"/>
+</g>`
+      },
+      {
+        id: 'ordovician_9', name: '房角石', rarity: 'epic', color: '#7890b8',
+        role: '头足类 · 内角石科',
+        quote: '奥陶纪的海中之王,长达十一米。',
+        stats: ['奥陶纪 · 4.7亿年前', 'Cameroceras trentonense'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <path d="M-45,-52 Q-66,0 -45,52" stroke-width="2.2"/>
+  <path d="M-45,-52 L110,-22" stroke-width="2"/>
+  <path d="M-45,52 L110,22" stroke-width="2"/>
+  <path d="M-45,-52 L110,-22 L110,22 L-45,52 Q-66,0 -45,-52Z" fill="currentColor" fill-opacity="0.1" stroke-width="0"/>
+  <path d="M-30,-50 Q-28,0 -30,50" stroke-width="1.2" opacity="0.65"/>
+  <path d="M-10,-47 Q-8,0 -10,47" stroke-width="1.2" opacity="0.65"/>
+  <path d="M12,-44 Q14,0 12,44" stroke-width="1.2" opacity="0.65"/>
+  <path d="M36,-41 Q38,0 36,41" stroke-width="1.2" opacity="0.65"/>
+  <path d="M62,-37 Q64,0 62,37" stroke-width="1.1" opacity="0.6"/>
+  <path d="M88,-32 Q90,0 88,32" stroke-width="1.1" opacity="0.6"/>
+  <path d="M-66,0 L110,0" stroke-width="0.8" stroke-dasharray="5,3" opacity="0.4"/>
+  <path d="M-66,0 Q-86,-22 -100,-36" stroke-width="1.3"/>
+  <path d="M-66,0 Q-84,-14 -100,-20" stroke-width="1.3"/>
+  <path d="M-66,0 Q-86,-6 -104,-6" stroke-width="1.3"/>
+  <path d="M-66,0 Q-86,6 -104,6" stroke-width="1.3"/>
+  <path d="M-66,0 Q-84,14 -100,20" stroke-width="1.3"/>
+  <path d="M-66,0 Q-86,22 -100,36" stroke-width="1.3"/>
+  <circle cx="-68" cy="-20" r="4" fill="currentColor" fill-opacity="0.3" stroke-width="1"/>
+  <circle cx="-68" cy="20" r="4" fill="currentColor" fill-opacity="0.3" stroke-width="1"/>
+  <path d="M-50,-76 Q-42,-82 -34,-76 Q-38,-70 -50,-76Z" fill="currentColor" fill-opacity="0.2" stroke-width="0.9"/>
+  <path d="M-34,-76 Q-28,-84 -24,-76" stroke-width="0.9"/>
+  <circle cx="-47" cy="-76" r="1.8" fill="currentColor" fill-opacity="0.4" stroke-width="0"/>
+</g>`
+      },
+      {
+        id: 'ordovician_10', name: '翼肢鲎', rarity: 'epic', color: '#c87840',
+        role: '节肢动物 · 翼肢鲎属',
+        quote: '两米半的恐惧。',
+        stats: ['志留纪 · 4.3亿年前', 'Pterygotus anglicus'],
+        svgContent: `<g transform="translate(140,108)" stroke="currentColor" fill="none" stroke-linecap="round">
+  <path d="M-28,-80 Q0,-90 28,-80 Q46,-68 46,-52 Q44,-36 28,-30 Q0,-22 -28,-30 Q-46,-38 -46,-54 Q-44,-70 -28,-80Z" fill="currentColor" fill-opacity="0.16" stroke-width="1.8"/>
+  <path d="M-22,-62 Q-14,-70 -6,-62 Q-14,-54 -22,-62Z" fill="currentColor" fill-opacity="0.3" stroke-width="1.1"/>
+  <path d="M6,-62 Q14,-70 22,-62 Q14,-54 6,-62Z" fill="currentColor" fill-opacity="0.3" stroke-width="1.1"/>
+  <path d="M-20,-80 Q-28,-100 -46,-96 Q-60,-90 -62,-76 Q-60,-62 -46,-60" stroke-width="1.6"/>
+  <path d="M-46,-60 Q-34,-54 -22,-66" stroke-width="1.4"/>
+  <path d="M20,-80 Q28,-100 46,-96 Q60,-90 62,-76 Q60,-62 46,-60" stroke-width="1.6"/>
+  <path d="M46,-60 Q34,-54 22,-66" stroke-width="1.4"/>
+  <path d="M-36,-52 Q-60,-52 -76,-46" stroke-width="1.2"/>
+  <path d="M-38,-44 Q-62,-46 -78,-46" stroke-width="1.2"/>
+  <path d="M-38,-36 Q-64,-42 -80,-46" stroke-width="1.2"/>
+  <path d="M36,-52 Q60,-52 76,-46" stroke-width="1.2"/>
+  <path d="M38,-44 Q62,-46 78,-46" stroke-width="1.2"/>
+  <path d="M38,-36 Q64,-42 80,-46" stroke-width="1.2"/>
+  <path d="M-40,-24 Q-60,-10 -90,-6 Q-98,2 -96,10 Q-92,16 -82,14 Q-66,10 -48,-2" stroke-width="1.7"/>
+  <path d="M40,-24 Q60,-10 90,-6 Q98,2 96,10 Q92,16 82,14 Q66,10 48,-2" stroke-width="1.7"/>
+  <path d="M-30,-24 L30,-24 L30,34 Q0,38 -30,34Z" fill="currentColor" fill-opacity="0.11" stroke-width="1.5"/>
+  <path d="M-30,-12 L30,-12" stroke-width="0.8" opacity="0.5"/>
+  <path d="M-30,0 L30,0" stroke-width="0.8" opacity="0.5"/>
+  <path d="M-29,12 L29,12" stroke-width="0.8" opacity="0.5"/>
+  <path d="M-28,24 L28,24" stroke-width="0.8" opacity="0.5"/>
+  <path d="M-22,34 L-10,78 L10,78 L22,34" fill="currentColor" fill-opacity="0.11" stroke-width="1.3"/>
+  <path d="M-20,44 L20,44" stroke-width="0.7" opacity="0.45"/>
+  <path d="M-16,54 L16,54" stroke-width="0.7" opacity="0.45"/>
+  <path d="M-12,64 L12,64" stroke-width="0.7" opacity="0.45"/>
+  <path d="M0,78 L0,96" stroke-width="2.2"/>
+  <path d="M-5,78 Q0,88 5,78" stroke-width="1.3"/>
+</g>`
+      }
+    ]
   }
 };
 
@@ -2017,7 +2283,7 @@ function getCurrentSeason() {
 
 function pickRandomCollection() {
   const season = getCurrentSeason();
-  const nonSeason = ['fossil', 'library', 'cambrian'];
+  const nonSeason = ['fossil', 'library', 'cambrian', 'ordovician'];
   const pools = [season, season, ...nonSeason]; // 季节系列权重更高
   return pools[Math.floor(Math.random() * pools.length)];
 }
@@ -2347,11 +2613,7 @@ function render() {
             ${col.items.map(item => {
               const owned = collected.includes(item.id);
               if (owned) {
-                return `<div style="opacity:1;cursor:pointer;transition:transform 0.2s" 
-                  onclick="showCardZoom(${JSON.stringify(JSON.stringify(item))}, ${JSON.stringify(JSON.stringify(col.name))})"
-                  onmouseover="this.style.transform='scale(1.03)'" 
-                  onmouseout="this.style.transform='scale(1)'"
-                >${generateCardSVG(item, col.name)}</div>`;
+                return `<div style="opacity:1;cursor:pointer;transition:transform 0.2s" onclick="showCardZoom('${key}','${item.id}')" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">${generateCardSVG(item, col.name)}</div>`;
               } else {
                 return `<div>${generateLockedCardSVG()}</div>`;
               }
@@ -2510,10 +2772,10 @@ function render() {
   });
 }
 
-function showCardZoom(itemJson, colNameJson) {
-  const item = JSON.parse(itemJson);
-  const colName = JSON.parse(colNameJson);
-  document.getElementById('cardZoomDisplay').innerHTML = generateCardSVG(item, colName);
+function showCardZoom(collectionKey, itemId) {
+  const col = GACHA_COLLECTIONS[collectionKey];
+  const item = col.items.find(i => i.id === itemId);
+  document.getElementById('cardZoomDisplay').innerHTML = generateCardSVG(item, col.name);
   document.getElementById('cardZoomModal').classList.add('show');
 }
 
@@ -2783,11 +3045,12 @@ if (!state.completedDaily) state.completedDaily = {};
 if (!state.completedWeekly) state.completedWeekly = {};
 if (!state.lastWeekStr) state.lastWeekStr = getWeekStr();
 if (!state.collection) {
-  state.collection = { spring: [], summer: [], fossil: [], library: [], cambrian: [], gentleMessages: { huangdou: [], gege: [] } };
+  state.collection = { spring: [], summer: [], fossil: [], library: [], cambrian: [], ordovician: [], gentleMessages: { huangdou: [], gege: [] } };
 }
 if (!state.collection.summer) state.collection.summer = [];
 if (!state.collection.library) state.collection.library = [];
 if (!state.collection.cambrian) state.collection.cambrian = [];
+if (!state.collection.ordovician) state.collection.ordovician = [];
 if (!state.collection.books) {} else { state.collection.library = state.collection.books; delete state.collection.books; }
 if (!state.collection.gentleMessages) {
   state.collection.gentleMessages = { huangdou: [], gege: [] };
