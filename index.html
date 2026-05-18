@@ -393,6 +393,69 @@
     white-space: pre-line;
   }
 
+  /* Jieqi banner */
+  .jieqi-banner {
+    background: linear-gradient(135deg, rgba(240,192,96,0.12), rgba(232,168,124,0.08));
+    border: 1px solid rgba(240,192,96,0.35);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .jieqi-banner-left { display:flex; align-items:center; gap:10px; }
+  .jieqi-banner-emoji { font-size: 28px; }
+  .jieqi-banner-name { font-size: 16px; font-weight: 600; color: var(--gold); }
+  .jieqi-banner-sub  { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .jieqi-claim-btn {
+    background: var(--gold); color: #1a1828; border: none;
+    border-radius: 20px; padding: 7px 16px; font-size: 13px;
+    font-weight: 700; cursor: pointer; white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .jieqi-claim-btn:disabled { opacity: 0.45; cursor: default; }
+
+  /* Next jieqi strip */
+  .jieqi-next-strip {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text-dim);
+    padding: 6px 2px 10px;
+    opacity: 0.75;
+  }
+
+  /* Calendar */
+  .cal-wrap { margin-bottom: 16px; }
+  .cal-toggle {
+    background: none; border: none; color: var(--text-dim);
+    font-size: 12px; cursor: pointer; padding: 4px 2px;
+    display: flex; align-items: center; gap: 6px;
+    width: 100%;
+  }
+  .cal-grid {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+  }
+  .cal-dow { font-size: 10px; color: var(--text-dim); padding: 2px 0 6px; opacity: 0.6; }
+  .cal-day {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; margin: 0 auto;
+    color: var(--text-dim);
+  }
+  .cal-day.checked { background: var(--accent); color: #fff; opacity: 0.9; }
+  .cal-day.today   { background: var(--accent); color: #fff; box-shadow: 0 0 0 2px var(--surface), 0 0 0 3.5px var(--accent); }
+  .cal-day.future  { opacity: 0.2; }
+  .cal-day.jieqi-day::after {
+    content: '·'; position: absolute; bottom: 1px;
+    font-size: 14px; color: var(--gold); line-height: 1;
+  }
+  .cal-day { position: relative; }
+
   /* Encouragement */
   .encouragement {
     background: rgba(232,168,124,0.08);
@@ -2061,6 +2124,87 @@ const GACHA_COLLECTIONS = {
   }
 };
 
+const JIEQI = [
+  { name:'小寒', date:'2026-01-05', emoji:'❄️' },
+  { name:'大寒', date:'2026-01-20', emoji:'🌨️' },
+  { name:'立春', date:'2026-02-04', emoji:'🌱' },
+  { name:'雨水', date:'2026-02-19', emoji:'🌧️' },
+  { name:'惊蛰', date:'2026-03-06', emoji:'⚡' },
+  { name:'春分', date:'2026-03-20', emoji:'🌸' },
+  { name:'清明', date:'2026-04-05', emoji:'🍃' },
+  { name:'谷雨', date:'2026-04-20', emoji:'🌿' },
+  { name:'立夏', date:'2026-05-06', emoji:'☀️' },
+  { name:'小满', date:'2026-05-21', emoji:'🌾' },
+  { name:'芒种', date:'2026-06-06', emoji:'🌻' },
+  { name:'夏至', date:'2026-06-21', emoji:'🌞' },
+  { name:'小暑', date:'2026-07-07', emoji:'🌊' },
+  { name:'大暑', date:'2026-07-23', emoji:'🔥' },
+  { name:'立秋', date:'2026-08-07', emoji:'🍂' },
+  { name:'处暑', date:'2026-08-23', emoji:'🌤️' },
+  { name:'白露', date:'2026-09-08', emoji:'💧' },
+  { name:'秋分', date:'2026-09-23', emoji:'🍁' },
+  { name:'寒露', date:'2026-10-08', emoji:'🌙' },
+  { name:'霜降', date:'2026-10-23', emoji:'🌫️' },
+  { name:'立冬', date:'2026-11-07', emoji:'🍵' },
+  { name:'小雪', date:'2026-11-22', emoji:'❄️' },
+  { name:'大雪', date:'2026-12-07', emoji:'⛄' },
+  { name:'冬至', date:'2026-12-22', emoji:'🥟' },
+  { name:'小寒', date:'2027-01-06', emoji:'❄️' },
+  { name:'大寒', date:'2027-01-20', emoji:'🌨️' },
+  { name:'立春', date:'2027-02-03', emoji:'🌱' },
+  { name:'雨水', date:'2027-02-18', emoji:'🌧️' },
+  { name:'惊蛰', date:'2027-03-06', emoji:'⚡' },
+  { name:'春分', date:'2027-03-21', emoji:'🌸' },
+];
+
+function jieqiDateToMs(dateStr) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return new Date(y, m - 1, d).getTime();
+}
+
+function getActiveJieqi() {
+  const now = Date.now();
+  const threeDays = 3 * 86400000;
+  return JIEQI.find(j => {
+    const t = jieqiDateToMs(j.date);
+    return now >= t && now < t + threeDays;
+  }) || null;
+}
+
+function getNextJieqi() {
+  const now = Date.now();
+  return JIEQI.find(j => jieqiDateToMs(j.date) > now) || null;
+}
+
+function claimJieqi(key) {
+  if (state.claimedJieqi.includes(key)) return;
+  state.claimedJieqi.push(key);
+  state.gold += 50;
+  state.stats.totalGoldEarned = (state.stats.totalGoldEarned || 0) + 50;
+  // Free advanced gacha card
+  const collection = pickRandomCollection();
+  const rareItems = GACHA_COLLECTIONS[collection].items.filter(i => i.rarity === 'rare' || i.rarity === 'epic');
+  if (rareItems.length > 0) {
+    const item = rareItems[Math.floor(Math.random() * rareItems.length)];
+    const isNew = !state.collection[collection].includes(item.id);
+    if (isNew) state.collection[collection].push(item.id);
+    save();
+    setTimeout(() => showGachaResult({ ...item, collection: GACHA_COLLECTIONS[collection].name, collectionKey: collection, isNew, isGentle: false }), 400);
+  }
+  save();
+  render();
+  showToast('🎉 节气礼包已领取！');
+}
+
+function doCheckIn() {
+  const t = today();
+  if (state.checkInHistory.includes(t)) return;
+  state.checkInHistory.push(t);
+  state.gold += 10;
+  state.goldToday = (state.goldToday || 0) + 10;
+  state.stats.totalGoldEarned = (state.stats.totalGoldEarned || 0) + 10;
+}
+
 const COLLECTION_GROUPS = [
   { id: 'seasonal', name: '🍃 季节限定',   keys: ['spring', 'summer'] },
   { id: 'paleo',    name: '🦕 古生物博物馆', keys: ['fossil', 'cambrian', 'ordovician'] },
@@ -2114,6 +2258,7 @@ let state = JSON.parse(localStorage.getItem('lifeRPG') || 'null') || {
   completedWeekly: {},   // 每周重置
   completedBig: {},      // 永不重置
   streak: 1, lastDate: '', lastWeekStr: '', activeTab: 0,
+  checkInHistory: [], claimedJieqi: [],
   unlockedAchievements: [],
   stats: {
     tasksCompleted: 0,
@@ -2882,6 +3027,81 @@ function render() {
     return;
   }
 
+  // Jieqi banner + calendar (daily tab only)
+  if ((state.activeTab || 0) === 0) {
+    const jieqiDiv = document.createElement('div');
+    const activeJ = getActiveJieqi();
+    const nextJ = getNextJieqi();
+
+    let jieqiHTML = '';
+
+    // Active jieqi banner
+    if (activeJ) {
+      const key = activeJ.date;
+      const claimed = state.claimedJieqi.includes(key);
+      jieqiHTML += `<div class="jieqi-banner">
+        <div class="jieqi-banner-left">
+          <div class="jieqi-banner-emoji">${activeJ.emoji}</div>
+          <div>
+            <div class="jieqi-banner-name">${activeJ.name}</div>
+            <div class="jieqi-banner-sub">${claimed ? '已领取 · +50金币 + 稀有卡片' : '节气活动进行中！领取限定礼包'}</div>
+          </div>
+        </div>
+        <button class="jieqi-claim-btn" onclick="claimJieqi('${key}')" ${claimed ? 'disabled' : ''}>${claimed ? '已领取' : '领取'}</button>
+      </div>`;
+    }
+
+    // Next jieqi countdown
+    if (nextJ) {
+      const daysLeft = Math.ceil((jieqiDateToMs(nextJ.date) - Date.now()) / 86400000);
+      jieqiHTML += `<div class="jieqi-next-strip">${nextJ.emoji} 下一个节气：<strong style="color:var(--text)">${nextJ.name}</strong>&nbsp;· 还有 ${daysLeft} 天</div>`;
+    }
+
+    // Mini calendar
+    const d = new Date();
+    const year = d.getFullYear(), month = d.getMonth();
+    const todayDate = d.getDate();
+    const firstDay = new Date(year, month, 1).getDay(); // 0=Sun
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const offset = firstDay === 0 ? 6 : firstDay - 1; // Mon-first offset
+    const monthLabel = d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' });
+
+    // Jieqi days this month
+    const jieqiDays = new Set(JIEQI
+      .filter(j => { const jd = new Date(j.date); return jd.getFullYear() === year && jd.getMonth() === month; })
+      .map(j => new Date(j.date).getDate())
+    );
+
+    let calCells = ['一','二','三','四','五','六','日'].map(d => `<div class="cal-dow">${d}</div>`).join('');
+    for (let i = 0; i < offset; i++) calCells += '<div></div>';
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = new Date(year, month, day).toLocaleDateString('zh-CN');
+      const isChecked = state.checkInHistory.includes(dateStr);
+      const isToday = day === todayDate;
+      const isFuture = day > todayDate;
+      const isJieqi = jieqiDays.has(day);
+      let cls = 'cal-day';
+      if (isToday) cls += ' today';
+      else if (isFuture) cls += ' future';
+      else if (isChecked) cls += ' checked';
+      if (isJieqi) cls += ' jieqi-day';
+      calCells += `<div class="${cls}">${day}</div>`;
+    }
+
+    const calOpen = state._calOpen !== false;
+    jieqiHTML += `<div class="cal-wrap">
+      <button class="cal-toggle" onclick="state._calOpen=!${calOpen};render()">
+        <span>${calOpen ? '▼' : '▶'}</span>
+        <span>📅 ${monthLabel} · 🔥 连续 ${state.streak} 天</span>
+        <span style="margin-left:auto;opacity:0.5">${state.checkInHistory.filter(s => s.startsWith(year+'')).length} 天签到</span>
+      </button>
+      ${calOpen ? `<div class="cal-grid">${calCells}</div>` : ''}
+    </div>`;
+
+    jieqiDiv.innerHTML = jieqiHTML;
+    container.appendChild(jieqiDiv);
+  }
+
   const activeGroup = TYPE_GROUPS[state.activeTab || 0];
   const groupTasks = ALL_TASKS.filter(t => activeGroup.types.includes(t.type) && shouldShowTask(t));
 
@@ -3166,7 +3386,6 @@ const todayStr = today();
 const currentWeekStr = getWeekStr();
 
 if (state.lastDate && state.lastDate !== todayStr) {
-  // New day: reset daily tasks and goldToday
   state.completedDaily = {};
   state.goldToday = 0;
   const yesterday = new Date();
@@ -3178,6 +3397,9 @@ if (state.lastDate && state.lastDate !== todayStr) {
   }
 }
 state.lastDate = todayStr;
+if (!state.checkInHistory) state.checkInHistory = [];
+if (!state.claimedJieqi) state.claimedJieqi = [];
+doCheckIn();
 
 // Check for weekly reset
 if (state.lastWeekStr && state.lastWeekStr !== currentWeekStr) {
@@ -3257,6 +3479,7 @@ document.addEventListener('visibilitychange', () => {
     state.streak = state.lastDate === yesterday.toLocaleDateString('zh-CN')
       ? (state.streak || 0) + 1 : 1;
     state.lastDate = newDay;
+    doCheckIn();
     changed = true;
   }
   if (state.lastWeekStr !== newWeek) {
