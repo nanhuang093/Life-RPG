@@ -2224,7 +2224,7 @@ function unlockAchievement(group, tier) {
 
 // Gacha Functions
 function drawGacha(isAdvanced = false) {
-  const cost = isAdvanced ? 150 : 50;
+  const cost = isAdvanced ? 100 : 35;
   
   if (state.gold < cost) {
     showToast('💰 金币不够了');
@@ -2603,7 +2603,7 @@ function render() {
           <div class="gacha-machine">
             <div class="gacha-machine-icon">🎰</div>
             <div class="gacha-machine-name">普通扭蛋</div>
-            <div class="gacha-machine-price">50 金币</div>
+            <div class="gacha-machine-price">35 金币</div>
             <div class="gacha-machine-rates">
               <div>普通 60% · 稀有 30% · 史诗 9%</div>
               <div style="color: var(--gold); margin-top: 4px;">传说 1%</div>
@@ -2614,7 +2614,7 @@ function render() {
           <div class="gacha-machine" style="${canAdvanced ? '' : 'opacity:0.5'}">
             <div class="gacha-machine-icon">${canAdvanced ? '💎' : '🔒'}</div>
             <div class="gacha-machine-name">高级扭蛋</div>
-            <div class="gacha-machine-price">${canAdvanced ? '150 金币' : 'Lv.5 解锁'}</div>
+            <div class="gacha-machine-price">${canAdvanced ? '100 金币' : 'Lv.5 解锁'}</div>
             <div class="gacha-machine-rates">
               <div>普通 30% · 稀有 40% · 史诗 25%</div>
               <div style="color: var(--gold); margin-top: 4px;">传说 3%</div>
@@ -2630,7 +2630,7 @@ function render() {
             <div class="gacha-machine" style="flex-direction:row;display:flex;align-items:center;justify-content:space-between;padding:16px 20px">
               <div>
                 <div class="gacha-machine-name">✨ 十连抽</div>
-                <div class="gacha-machine-price">450 金币 (节省50)</div>
+                <div class="gacha-machine-price">300 金币 (节省100)</div>
               </div>
               <button class="gacha-btn" style="padding:10px 24px" onclick="drawTenPull()">十连</button>
             </div>
@@ -2944,11 +2944,11 @@ function completeTask(id) {
 }
 
 function drawTenPull() {
-  if (state.gold < 450) {
-    showToast('💰 金币不够了,需要450金币');
+  if (state.gold < 300) {
+    showToast('💰 金币不够了,需要300金币');
     return;
   }
-  state.gold -= 450;
+  state.gold -= 300;
   state.stats.gachaCount = (state.stats.gachaCount || 0) + 10;
   let lastResult = null;
   for (let i = 0; i < 10; i++) {
