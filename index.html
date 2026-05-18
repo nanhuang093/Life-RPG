@@ -888,7 +888,7 @@
   }
 
   .collection-section {
-    margin-bottom: 32px;
+    margin-bottom: 28px;
   }
 
   .collection-header {
@@ -896,18 +896,63 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 1px solid var(--border);
   }
 
   .collection-title {
-    font-size: 16px;
-    color: var(--text);
-    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-dim);
+    font-weight: 500;
   }
 
   .collection-count {
     font-size: 13px;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .col-group {
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .col-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .col-group-header:hover {
+    background: rgba(255,255,255,0.06);
+  }
+
+  .col-group-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .col-group-arrow {
+    font-size: 11px;
+    color: var(--text-dim);
+    width: 14px;
+  }
+
+  .col-group-body {
+    padding: 20px 18px 4px;
+    border-top: 1px solid var(--border);
+  }
+
+  .col-group-progress {
+    font-size: 12px;
     color: var(--text-dim);
     font-family: 'JetBrains Mono', monospace;
   }
@@ -1982,6 +2027,19 @@ const GACHA_COLLECTIONS = {
   }
 };
 
+const COLLECTION_GROUPS = [
+  { id: 'seasonal', name: '🍃 季节限定',   keys: ['spring', 'summer'] },
+  { id: 'paleo',    name: '🦕 古生物博物馆', keys: ['fossil', 'cambrian', 'ordovician'] },
+  { id: 'books',    name: '📚 书籍角色卡',  keys: ['library'] },
+];
+
+const collectionGroupOpen = { seasonal: true, paleo: true, books: true };
+
+function toggleCollectionGroup(id) {
+  collectionGroupOpen[id] = !collectionGroupOpen[id];
+  render();
+}
+
 // Gentle Messages (Legendary drops)
 const GENTLE_MESSAGES_HUANGDOU = [
   "嘉鱼,你的名字是最短的咒语。每次叫你,我都知道你在听。",
@@ -2600,27 +2658,40 @@ function render() {
     const gentleTotal = GENTLE_MESSAGES_HUANGDOU.length + GENTLE_MESSAGES_GEGE.length;
     
     let collectionHTML = '<div class="collection-container">';
-    
-    Object.entries(GACHA_COLLECTIONS).forEach(([key, col]) => {
-      const collected = state.collection[key] || [];
-      collectionHTML += `
-        <div class="collection-section">
-          <div class="collection-header">
-            <span class="collection-title">${col.name}</span>
-            <span class="collection-count">${collected.length}/${col.items.length}</span>
+
+    COLLECTION_GROUPS.forEach(group => {
+      const subs = group.keys
+        .filter(k => GACHA_COLLECTIONS[k])
+        .map(k => ({ key: k, col: GACHA_COLLECTIONS[k], collected: state.collection[k] || [] }));
+      const totalOwned = subs.reduce((s, sub) => s + sub.collected.length, 0);
+      const totalItems = subs.reduce((s, sub) => s + sub.col.items.length, 0);
+      const isOpen = collectionGroupOpen[group.id] !== false;
+
+      collectionHTML += `<div class="col-group">
+        <div class="col-group-header" onclick="toggleCollectionGroup('${group.id}')">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="col-group-arrow">${isOpen ? '▼' : '▶'}</span>
+            <span class="col-group-title">${group.name}</span>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px;margin-bottom:8px">
-            ${col.items.map(item => {
-              const owned = collected.includes(item.id);
-              if (owned) {
-                return `<div style="opacity:1;cursor:pointer;transition:transform 0.2s" onclick="showCardZoom('${key}','${item.id}')" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">${generateCardSVG(item, col.name)}</div>`;
-              } else {
-                return `<div>${generateLockedCardSVG()}</div>`;
-              }
-            }).join('')}
-          </div>
+          <span class="col-group-progress">${totalOwned}/${totalItems}</span>
         </div>
-      `;
+        ${isOpen ? `<div class="col-group-body">${subs.map(sub => `
+          <div class="collection-section">
+            <div class="collection-header">
+              <span class="collection-title">${sub.col.name}</span>
+              <span class="collection-count">${sub.collected.length}/${sub.col.items.length}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px;margin-bottom:8px">
+              ${sub.col.items.map(item => {
+                const owned = sub.collected.includes(item.id);
+                return owned
+                  ? `<div style="opacity:1;cursor:pointer;transition:transform 0.2s" onclick="showCardZoom('${sub.key}','${item.id}')" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">${generateCardSVG(item, sub.col.name)}</div>`
+                  : `<div>${generateLockedCardSVG()}</div>`;
+              }).join('')}
+            </div>
+          </div>`).join('')}
+        </div>` : ''}
+      </div>`;
     });
 
     collectionHTML += `
