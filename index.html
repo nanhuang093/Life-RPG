@@ -2105,10 +2105,11 @@ function today() {
 
 function getWeekStr() {
   const d = new Date();
-  const year = d.getFullYear();
-  const startOfYear = new Date(year, 0, 1);
-  const weekNum = Math.ceil(((d - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
-  return `${year}-W${weekNum}`;
+  const day = d.getDay(); // 0=Sun
+  const diff = day === 0 ? -6 : 1 - day; // offset to Monday
+  const monday = new Date(d);
+  monday.setDate(d.getDate() + diff);
+  return monday.toLocaleDateString('zh-CN');
 }
 
 function isTaskDone(task) {
@@ -3159,6 +3160,31 @@ document.getElementById('gachaResultModal').addEventListener('click', function(e
 });
 document.getElementById('cardZoomModal').addEventListener('click', function(e) {
   if (e.target === this) this.classList.remove('show');
+});
+
+// Auto-reset check when app comes back to foreground
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible') return;
+  const newDay = today();
+  const newWeek = getWeekStr();
+  let changed = false;
+  if (state.lastDate !== newDay) {
+    state.completedDaily = {};
+    state.goldToday = 0;
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    state.streak = state.lastDate === yesterday.toLocaleDateString('zh-CN')
+      ? (state.streak || 0) + 1 : 1;
+    state.lastDate = newDay;
+    changed = true;
+  }
+  if (state.lastWeekStr !== newWeek) {
+    state.completedWeekly = {};
+    state.lastWeekStr = newWeek;
+    changed = true;
+    showToast('📅 新的一周开始了,每周任务已重置 ✨');
+  }
+  if (changed) { save(); render(); }
 });
 
 // Register Service Worker (PWA)
