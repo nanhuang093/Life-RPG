@@ -2034,6 +2034,8 @@ const COLLECTION_GROUPS = [
 ];
 
 const collectionGroupOpen = { seasonal: true, paleo: true, books: true };
+let showCompleted = false;
+function toggleShowCompleted() { showCompleted = !showCompleted; render(); }
 
 function toggleCollectionGroup(id) {
   collectionGroupOpen[id] = !collectionGroupOpen[id];
@@ -2584,6 +2586,18 @@ function render() {
   }).join('');
   container.appendChild(tabNav);
 
+  // Show-completed toggle (only on task tabs 0-2)
+  if ((state.activeTab || 0) <= 2) {
+    const toggle = document.createElement('div');
+    toggle.style.cssText = 'display:flex;justify-content:flex-end;padding:6px 2px 2px;';
+    toggle.innerHTML = `<button onclick="toggleShowCompleted()" style="
+      background:none;border:1px solid var(--border);border-radius:20px;
+      color:${showCompleted ? 'var(--accent)' : 'var(--text-dim)'};
+      font-size:12px;padding:4px 12px;cursor:pointer;transition:all 0.2s;
+    ">${showCompleted ? '✓ 显示已完成' : '已完成已隐藏'}</button>`;
+    container.appendChild(toggle);
+  }
+
   // If current tab is now locked (e.g. after reset), switch to daily
   if (currentLevel < (TYPE_GROUPS[state.activeTab]?.minLevel || 1)) {
     state.activeTab = 0;
@@ -2818,6 +2832,9 @@ function render() {
   cats.forEach(cat => {
     const tasks = groupTasks.filter(t => t.cat === cat);
     const doneInCat = tasks.filter(t => isTaskDone(t)).length;
+    const visibleTasks = showCompleted ? tasks : tasks.filter(t => !isTaskDone(t));
+    const allDone = doneInCat === tasks.length;
+
     const div = document.createElement('div');
     div.className = 'section';
     div.innerHTML = `
@@ -2826,24 +2843,26 @@ function render() {
         <span class="section-count">${doneInCat}/${tasks.length}</span>
       </div>
       <div class="task-list">
-        ${tasks.map(task => {
-          const taskName = getTaskName(task);
-          return `
-          <div class="task-item ${isTaskDone(task) ? 'completed' : ''}" id="task-${task.id}" onclick="completeTask('${task.id}')">
-            <div class="task-checkbox">${isTaskDone(task) ? '✓' : ''}</div>
-            <div class="task-info">
-              <div class="task-name">${taskName}</div>
-              <div class="task-tags">
-                <span class="tag tag-${task.type}">${TAG_LABELS[task.type]}</span>
+        ${allDone && !showCompleted
+          ? `<div style="padding:10px 4px;font-size:13px;color:var(--text-dim);opacity:0.6">✓ 全部完成</div>`
+          : visibleTasks.map(task => {
+              const taskName = getTaskName(task);
+              return `
+              <div class="task-item ${isTaskDone(task) ? 'completed' : ''}" id="task-${task.id}" onclick="completeTask('${task.id}')">
+                <div class="task-checkbox">${isTaskDone(task) ? '✓' : ''}</div>
+                <div class="task-info">
+                  <div class="task-name">${taskName}</div>
+                  <div class="task-tags">
+                    <span class="tag tag-${task.type}">${TAG_LABELS[task.type]}</span>
+                  </div>
+                </div>
+                <div class="task-reward">
+                  <div class="reward-xp">+${task.xp} XP</div>
+                  <div class="reward-gold">+${task.gold} 🪙</div>
+                </div>
+                ${!isTaskDone(task) ? `<button class="complete-btn" onclick="event.stopPropagation();completeTask('${task.id}')">完成</button>` : ''}
               </div>
-            </div>
-            <div class="task-reward">
-              <div class="reward-xp">+${task.xp} XP</div>
-              <div class="reward-gold">+${task.gold} 🪙</div>
-            </div>
-            ${!isTaskDone(task) ? `<button class="complete-btn" onclick="event.stopPropagation();completeTask('${task.id}')">完成</button>` : ''}
-          </div>
-        `;}).join('')}
+            `;}).join('')}
       </div>
     `;
     container.appendChild(div);
