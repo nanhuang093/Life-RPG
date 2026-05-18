@@ -2157,6 +2157,41 @@ const JIEQI = [
   { name:'春分', date:'2027-03-21', emoji:'🌸' },
 ];
 
+const HOLIDAYS = [
+  // 固定节日
+  { name:'元旦',     date:'2026-01-01', emoji:'🎆' },
+  { name:'情人节',   date:'2026-02-14', emoji:'💝' },
+  { name:'白色情人节', date:'2026-03-14', emoji:'🤍' },
+  { name:'劳动节',   date:'2026-05-01', emoji:'🌹' },
+  { name:'儿童节',   date:'2026-06-01', emoji:'🎈' },
+  { name:'万圣节',   date:'2026-10-31', emoji:'🎃' },
+  { name:'圣诞节',   date:'2026-12-25', emoji:'🎄' },
+  { name:'元旦',     date:'2027-01-01', emoji:'🎆' },
+  { name:'情人节',   date:'2027-02-14', emoji:'💝' },
+  { name:'白色情人节', date:'2027-03-14', emoji:'🤍' },
+  { name:'劳动节',   date:'2027-05-01', emoji:'🌹' },
+  { name:'儿童节',   date:'2027-06-01', emoji:'🎈' },
+  { name:'万圣节',   date:'2027-10-31', emoji:'🎃' },
+  { name:'圣诞节',   date:'2027-12-25', emoji:'🎄' },
+  // 农历节日 2026（需每年更新）
+  { name:'春节',   date:'2026-02-17', emoji:'🧧' },
+  { name:'元宵节', date:'2026-03-04', emoji:'🏮' },
+  { name:'端午节', date:'2026-06-20', emoji:'🐉' },
+  { name:'七夕',   date:'2026-08-25', emoji:'🌌' },
+  { name:'中秋节', date:'2026-10-01', emoji:'🥮' },
+  { name:'重阳节', date:'2026-10-21', emoji:'🍂' },
+  // 农历节日 2027
+  { name:'春节',   date:'2027-02-06', emoji:'🧧' },
+  { name:'元宵节', date:'2027-02-21', emoji:'🏮' },
+  { name:'端午节', date:'2027-06-09', emoji:'🐉' },
+  { name:'七夕',   date:'2027-08-14', emoji:'🌌' },
+  { name:'中秋节', date:'2027-09-19', emoji:'🥮' },
+  { name:'重阳节', date:'2027-10-09', emoji:'🍂' },
+];
+
+// 合并节气+节日，统一处理
+const ALL_EVENTS = [...JIEQI, ...HOLIDAYS];
+
 function jieqiDateToMs(dateStr) {
   const [y, m, d] = dateStr.split('-').map(Number);
   return new Date(y, m - 1, d).getTime();
@@ -2165,7 +2200,7 @@ function jieqiDateToMs(dateStr) {
 function getActiveJieqi() {
   const now = Date.now();
   const threeDays = 3 * 86400000;
-  return JIEQI.find(j => {
+  return ALL_EVENTS.find(j => {
     const t = jieqiDateToMs(j.date);
     return now >= t && now < t + threeDays;
   }) || null;
@@ -2173,7 +2208,9 @@ function getActiveJieqi() {
 
 function getNextJieqi() {
   const now = Date.now();
-  return JIEQI.find(j => jieqiDateToMs(j.date) > now) || null;
+  return ALL_EVENTS
+    .filter(j => jieqiDateToMs(j.date) > now)
+    .sort((a, b) => jieqiDateToMs(a.date) - jieqiDateToMs(b.date))[0] || null;
 }
 
 function claimJieqi(key) {
@@ -3066,8 +3103,8 @@ function render() {
     const offset = firstDay === 0 ? 6 : firstDay - 1; // Mon-first offset
     const monthLabel = d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' });
 
-    // Jieqi days this month
-    const jieqiDays = new Set(JIEQI
+    // Event days this month (节气 + 节日)
+    const jieqiDays = new Set(ALL_EVENTS
       .filter(j => { const jd = new Date(j.date); return jd.getFullYear() === year && jd.getMonth() === month; })
       .map(j => new Date(j.date).getDate())
     );
