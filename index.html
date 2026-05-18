@@ -660,6 +660,40 @@
 
   .pop { animation: pop 0.3s ease; }
 
+  @keyframes floatUp {
+    0%   { opacity: 1; transform: translateY(0) scale(1); }
+    80%  { opacity: 0.6; }
+    100% { opacity: 0; transform: translateY(-72px) scale(0.85); }
+  }
+
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    font-weight: 700;
+    animation: floatUp 0.9s ease-out forwards;
+  }
+
+  @keyframes levelUpGlow {
+    0%   { box-shadow: 0 0 0 0 rgba(240,192,96,0.6); }
+    50%  { box-shadow: 0 0 40px 16px rgba(240,192,96,0.35); }
+    100% { box-shadow: 0 0 0 0 rgba(240,192,96,0); }
+  }
+
+  .surprise-modal.levelup .surprise-content {
+    border-color: var(--gold);
+    animation: bounceIn 0.5s cubic-bezier(0.34,1.56,0.64,1), levelUpGlow 1.8s ease-out 0.3s;
+  }
+
+  .surprise-modal.levelup .surprise-icon {
+    animation: bounce 0.6s ease-in-out 3;
+  }
+
+  .surprise-modal.levelup .surprise-title {
+    color: var(--gold);
+    font-size: 24px;
+  }
+
   /* Gacha Styles */
   .gacha-container {
     padding: 20px 0;
@@ -2175,15 +2209,38 @@ function showEncouragement() {
   document.getElementById('encouragement').textContent = enc;
 }
 
-function setSurpriseMessage(msg) {
-  document.getElementById('surpriseIcon').textContent = '🎉';
+function setSurpriseMessage(msg, isLevelUp = false) {
+  document.getElementById('surpriseIcon').textContent = isLevelUp ? '🎉' : '✨';
   document.getElementById('surpriseMessage').textContent = msg;
+  document.getElementById('surpriseModal').dataset.levelup = isLevelUp ? '1' : '';
 }
 
 function showSurpriseModal() {
   const modal = document.getElementById('surpriseModal');
+  modal.classList.toggle('levelup', modal.dataset.levelup === '1');
   modal.classList.add('show');
-  setTimeout(() => modal.classList.remove('show'), 4000);
+  setTimeout(() => { modal.classList.remove('show', 'levelup'); }, 4000);
+}
+
+function spawnParticles(rect, task) {
+  const items = [
+    { text: `+${task.xp} XP`, color: '#7eb8c9' },
+    { text: `+${task.gold} 🪙`, color: '#f0c060' },
+    { text: '✨', color: '#e8a87c' },
+    { text: '⭐', color: '#f0c060' },
+    { text: '✨', color: '#c8a8e8' },
+  ];
+  const cx = rect.left + rect.width * 0.5;
+  const cy = rect.top + rect.height * 0.5;
+  items.forEach((item, i) => {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = item.text;
+    const offsetX = (Math.random() - 0.5) * rect.width * 0.9;
+    p.style.cssText = `left:${cx + offsetX}px;top:${cy}px;color:${item.color};font-size:${i < 2 ? '13px' : '18px'};animation-delay:${i * 55}ms;`;
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 950 + i * 55);
+  });
 }
 
 function showSurprise() {
@@ -2944,12 +3001,16 @@ function completeTask(id) {
           showGachaResult({ ...item, collection: GACHA_COLLECTIONS[collection].name, collectionKey: collection, isNew, isGentle: false });
         }, 2500);
       }
-      setSurpriseMessage(`🎉 升到 Lv.${levelAfter}!\n+${goldReward} 金币\n稀有扭蛋已送达 🎰`);
+      setSurpriseMessage(`升到 Lv.${levelAfter}!\n+${goldReward} 金币\n稀有扭蛋已送达 🎰`, true);
     } else {
-      setSurpriseMessage(`🎉 升到 Lv.${levelAfter}!\n+${goldReward} 金币 🪙`);
+      setSurpriseMessage(`升到 Lv.${levelAfter}!\n+${goldReward} 金币 🪙`, true);
     }
     showSurpriseModal();
   }
+
+  // Capture position before render
+  const elBefore = document.getElementById('task-' + id);
+  const rect = elBefore ? elBefore.getBoundingClientRect() : null;
 
   save();
   checkAchievements();
@@ -2958,6 +3019,7 @@ function completeTask(id) {
 
   const el = document.getElementById('task-' + id);
   if (el) el.classList.add('pop');
+  if (rect) spawnParticles(rect, task);
 
   const taskName = getTaskName(task);
   showToast(`✨ +${task.xp} XP  🪙 +${task.gold}  「${taskName}」完成!`);
@@ -3050,7 +3112,7 @@ function completeRandomTask(taskId) {
     state.gold += goldReward;
     state.goldToday += goldReward;
     state.stats.totalGoldEarned += goldReward;
-    setSurpriseMessage(`🎉 升到 Lv.${levelAfter}!\n+${goldReward} 金币 🪙`);
+    setSurpriseMessage(`升到 Lv.${levelAfter}!\n+${goldReward} 金币 🪙`, true);
     showSurpriseModal();
     save();
   }
